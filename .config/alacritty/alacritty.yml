@@ -1,0 +1,113 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+
+env:
+  TERM: 'xterm-256color'
+
+window:
+  # Background opacity
+  opacity: 0.8
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 10000
+
+# Font configuration
+font:
+  # Normal font face
+  normal:
+    family: FiraCode Nerd Font Mono
+    style: Regular
+
+  # Bold font face
+  bold:
+    family: FiraCode Nerd Font Mono
+    style: Bold
+
+  # Italic font face
+  italic:
+    family: FiraCode Nerd Font Mono
+    style: Italic
+
+  # Bold italic font face
+  bold_italic:
+    family: FiraCode Nerd Font Mono
+    style: Bold Italic
+
+  # Point size
+  size: 15.0
+
+# Colors (Tokyo Night Storm)
+colors:
+  primary:
+    background: "#24283b"
+    foreground: "#a9b1d6"
+
+  # Normal colors
+  normal:
+    black: "#32344a"
+    red: "#f7768e"
+    green: "#9ece6a"
+    yellow: "#e0af68"
+    blue: "#7aa2f7"
+    magenta: "#ad8ee6"
+    cyan: "#449dab"
+    white: "#9699a8"
+
+  # Bright colors
+  bright:
+    black: "#444b6a"
+    red: "#ff7a93"
+    green: "#b9f27c"
+    yellow: "#ff9e64"
+    blue: "#7da6ff"
+    magenta: "#bb9af7"
+    cyan: "#0db9d7"
+    white: "#acb0d0"
+
+# Bell
+#
+# The bell is rung every time the BEL control character is received.
+bell:
+  # Values for `animation`:
+  #   - Ease
+  #   - EaseOut
+  #   - EaseOutSine
+  #   - EaseOutQuad
+  #   - EaseOutCubic
+  #   - EaseOutQuart
+  #   - EaseOutQuint
+  #   - EaseOutExpo
+  #   - EaseOutCirc
+  #   - Linear
+  animation: Linear
+
+cursor:
+  # Cursor style
+  style: Beam
+  # Cursor shape
+  #
+  # Values for `shape`:
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  shape: Beam
+
+  # Cursor blinking state
+  #
+  # Values for `blinking`:
+  #   - Never: Prevent the cursor from ever blinking
+  #   - Off: Disable blinking by default
+  #   - On: Enable blinking by default
+  #   - Always: Force the cursor to always blink
+  blinking: On
+
+  # Vi mode cursor style
+  vi_mode_style: Beam
+
+  # Cursor blinking interval in milliseconds.
+  blink_interval: 750
+
+  mouse:
+    # If this is `true`, the cursor is temporarily hidden when typing.
+    hide_when_typing: true
