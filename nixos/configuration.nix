@@ -133,7 +133,6 @@
     };
 
     xserver = {
-      enable = true;
       # Configure keymap in X11
       xkb = {
         layout = "us";
@@ -148,13 +147,6 @@
 
     # Enable the VSCode Server
     vscode-server.enable = true;
-
-    # Stop sleeping
-    logind = {
-      lidSwitchExternalPower = "ignore";   
-      lidSwitch = "ignore";
-      extraConfig = "HandleLidSwitch=ignore";
-    };
   };
 
   systemd = {
