@@ -13,6 +13,7 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs = inputs@{
@@ -20,6 +21,7 @@
     nixpkgs,
     nixpkgs-stable,
     home-manager,
+    vscode-server,
     ...
   }: {
     nixosConfigurations = {
@@ -34,7 +36,10 @@
         };
         modules = [
           ./nixos/configuration.nix
-
+	  vscode-server.nixosModules.default
+          ({ config, pkgs, ... }: {
+            services.vscode-server.enable = true;
+          })
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

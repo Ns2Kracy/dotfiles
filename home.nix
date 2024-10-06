@@ -12,6 +12,7 @@
     userName = "Ns2Kracy";
     userEmail = "ns2kracy@gmail.com";
   };
+  
 
   home.stateVersion = "24.05";
 
