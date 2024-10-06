@@ -81,9 +81,6 @@
     packages = with pkgs; [ ];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -118,27 +115,46 @@
   #   enableSSHSupport = true;
   # };
 
-  ###
   ###  List services that you want to enable:
-  ###
+  services = {
+    # Enable the OpenSSH daemon.
+    openssh = {
+      enable = true;
+    };
 
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
+    # Configure the display manager.
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland = {
+          enable = true;
+        };
+      };
+    };
+
+    xserver = {
+      enable = true;
+      # Configure keymap in X11
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+    };
+
+    # Enable the Caddy web server.
+    caddy = {
+      enable = true;
+    };
+
+    # Enable the VSCode Server
+    vscode-server.enable = true;
+
+    # Stop sleeping
+    logind.lidSwitchExternalPower = "ignore";   
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  services.caddy = {
-    enable = true;
-  };
-
-  # Enable the VSCode Server
-  services.vscode-server.enable = true;
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "24.05";
 }
