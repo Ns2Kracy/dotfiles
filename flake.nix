@@ -24,6 +24,7 @@
     vscode-server,
     ...
   }: {
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -36,7 +37,7 @@
         };
         modules = [
           ./nixos/configuration.nix
-	  vscode-server.nixosModules.default
+	        vscode-server.nixosModules.default
           ({ config, pkgs, ... }: {
             services.vscode-server.enable = true;
           })
