@@ -30,7 +30,7 @@
   };
 
   # Power management
-  powerManagement.enable = true;
+  powerManagement.enable = false;
 
   # Bootloader.
   boot.loader = {
@@ -150,7 +150,20 @@
     vscode-server.enable = true;
 
     # Stop sleeping
-    logind.lidSwitchExternalPower = "ignore";   
+    logind = {
+      lidSwitchExternalPower = "ignore";   
+      lidSwitch = "ignore";
+      extraConfig = "HandleLidSwitch=ignore";
+    };
+  };
+
+  systemd = {
+    targets = {
+      sleep.enable = false;
+      suspend.enable = false;
+      hibernate.enable = false;
+      hybrid-sleep.enable = false;
+    };
   };
 
   # Allow unfree packages

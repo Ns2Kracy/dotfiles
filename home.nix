@@ -12,7 +12,17 @@
 
   home.enableNixpkgsReleaseCheck = false;
 
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [
+    # terminal
+    alacritty
+    kitty
+
+    # shell
+    fish
+    zsh
+  ];
+
+  wayland.windowManager.hyprland.enable = true;
 
   programs.git = {
     enable = true;
