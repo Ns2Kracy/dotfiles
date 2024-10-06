@@ -18,7 +18,9 @@
       options = "--delete-older-than 1w";
     };
     settings = {
-      substituters = [ ];
+      substituters = [
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+      ];
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"
@@ -98,6 +100,13 @@
     rootless = {
       enable = true;
       setSocketVariable = true;
+    };
+    daemon = {
+      settings = {
+        "registry-mirrors" = [
+          "https://dockerproxy.cn"
+        ];
+      };
     };
   };
 
