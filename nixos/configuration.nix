@@ -133,6 +133,10 @@
     variant = "";
   };
 
+  services.caddy = {
+    enable = true;
+  };
+
   # Enable the VSCode Server
   services.vscode-server.enable = true;
 
