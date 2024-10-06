@@ -1,18 +1,24 @@
-{ config, pkgs, pkgs-stable, inputs, ... }:
+{
+  config,
+  pkgs,
+  pkgs-stable,
+  inputs,
+  ...
+}:
 
 {
   home.username = "ns2kracy";
   home.homeDirectory = "/home/ns2kracy";
 
-  home.packages = with pkgs;[];
+  home.enableNixpkgsReleaseCheck = false;
 
-  # git 相关配置
+  home.packages = with pkgs; [ ];
+
   programs.git = {
     enable = true;
     userName = "Ns2Kracy";
     userEmail = "ns2kracy@gmail.com";
   };
-  
 
   home.stateVersion = "24.05";
 
