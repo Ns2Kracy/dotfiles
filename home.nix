@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, inputs, ... }:
+{ config, pkgs, pkgs-unstable, inputs, ... }:
 
 {
   home.username = "ns2kracy";
