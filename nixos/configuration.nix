@@ -141,15 +141,12 @@
 
   # Enable the Virtualisation to use Docker.
   virtualisation.docker = {
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-      daemon = {
-        settings = {
-          "registry-mirrors" = [
-            "https://dockerproxy.cn"
-          ];
-        };
+    enable = true;
+    daemon = {
+      settings = {
+        "registry-mirrors" = [
+          "https://dockerproxy.cn"
+        ];
       };
     };
   };
