@@ -42,14 +42,11 @@
 
     overlays = import ./overlays {inherit inputs;};
 
-
     nixosConfigurations = {
-      
-
       homelab = nixpkgs.lib.nixosSystem rec {
         inherit system;
         modules = [
-          ./nixos/onfiguration.nix
+          ./nixos/configuration.nix
 
           {
             environment.systemPackages = [alejandra.defaultPackage.${system}];

@@ -12,7 +12,7 @@
     ./networking.nix
 
     # Include the openssh configuration.
-    ../common/services/openssh.nix
+    ./services/openssh.nix
   ];
 
   # Enable OpenGL
@@ -141,16 +141,15 @@
 
   # Enable the Virtualisation to use Docker.
   virtualisation.docker = {
-    enable = true;
     rootless = {
       enable = true;
       setSocketVariable = true;
-    };
-    daemon = {
-      settings = {
-        "registry-mirrors" = [
-          "https://dockerproxy.cn"
-        ];
+      daemon = {
+        settings = {
+          "registry-mirrors" = [
+            "https://dockerproxy.cn"
+          ];
+        };
       };
     };
   };
