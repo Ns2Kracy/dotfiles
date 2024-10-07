@@ -2,47 +2,75 @@
   description = "Ns2Kracy's Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nur.url = "github:nix-community/NUR";
+
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
+    alejandra = {
+      url = "github:kamadorueda/alejandra/3.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nixpkgs-stable,
-      home-manager,
-      vscode-server,
-      ...
-    }:
-    {
-      nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem rec {
-          system = "x86_64-linux";
-          specialArgs = {
-            pkgs-stable = import nixpkgs-stable {
-              inherit system;
-              config.allowUnfree = true;
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    vscode-server,
+    alejandra,
+    agenix,
+    ...
+  }: let
+    inherit (self) outputs;
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    nixosModules = import ./modules/nixos;
+
+    overlays = import ./overlays {inherit inputs;};
+
+
+    nixosConfigurations = {
+      
+
+      homelab = nixpkgs.lib.nixosSystem rec {
+        inherit system;
+        modules = [
+          ./nixos/onfiguration.nix
+
+          {
+            environment.systemPackages = [alejandra.defaultPackage.${system}];
+          }
+
+          agenix.nixosModules.default
+
+          vscode-server.nixosModules.default
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              users.ns2kracy = import ./home-manager/home.nix;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = inputs;
             };
-            inherit inputs;
-          };
-          modules = [
-            ./nixos/configuration.nix
-            vscode-server.nixosModules.default
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ns2kracy = import ./home.nix;
-              home-manager.extraSpecialArgs = inputs;
-            }
-          ];
-        };
+          }
+        ];
+        specialArgs = {inherit inputs;};
       };
     };
+  };
 }

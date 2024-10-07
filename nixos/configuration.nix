@@ -3,17 +3,21 @@
   pkgs,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+
+    # Include the networking configuration.
+    ./networking.nix
+
+    # Include the openssh configuration.
+    ../common/services/openssh.nix
   ];
 
   # Enable OpenGL
   hardware = {
-    graphics = {
+    opengl = {
       enable = true;
     };
     nvidia = {
@@ -87,14 +91,10 @@
     };
   };
 
-  # Networking
-  networking = {
-    hostName = "nixos";
-    networkmanager.enable = true;
+  time = {
+    timeZone = "Asia/Shanghai";
+    hardwareClockInLocalTime = true;
   };
-
-  # Set your time zone.
-  time.timeZone = "Asia/Shanghai";
 
   # Select internationalisation properties.
   i18n = {
@@ -116,12 +116,16 @@
   users.users.ns2kracy = {
     isNormalUser = true;
     description = "ns2kracy";
+    openssh = {
+      authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFMiTv3lrg8AFtjqBkcgNe4Czm3rBjOi0QhrHrrg5FGX ns2kracy@gmail.com"
+      ];
+    };
     extraGroups = [
       "networkmanager"
       "wheel"
       "docker"
     ];
-    packages = with pkgs; [ ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -131,7 +135,8 @@
     git
     wget
     curl
-    pkgs.nixfmt-rfc-style
+    nil
+    gnupg
   ];
 
   # Enable the Virtualisation to use Docker.
@@ -150,21 +155,17 @@
     };
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs = {
+    # Some programs need SUID wrappers, can be configured further or are
+    # started in user sessions.
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  };
 
   ###  List services that you want to enable:
   services = {
-    # Enable the OpenSSH daemon.
-    openssh = {
-      enable = true;
-    };
-
     # Configure the display manager.
     displayManager = {
       sddm = {
@@ -177,7 +178,7 @@
 
     xserver = {
       # Load nvidia driver for Xorg and Wayland
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = ["nvidia"];
       # Configure keymap in X11
       xkb = {
         layout = "us";

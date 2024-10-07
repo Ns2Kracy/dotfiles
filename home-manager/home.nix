@@ -1,16 +1,21 @@
 {
   config,
   pkgs,
-  pkgs-stable,
   inputs,
   ...
-}:
+}: {
+  imports = [
+    ./programs/git.nix
+  ];
 
-{
   home.username = "ns2kracy";
   home.homeDirectory = "/home/ns2kracy";
 
   home.enableNixpkgsReleaseCheck = false;
+
+  home.sessionVariables = {
+    GPG_TTY = "$(tty)";
+  };
 
   home.packages = with pkgs; [
     # terminal
@@ -22,7 +27,7 @@
     zsh
   ];
 
-  wayland.windowManager.hyprland.enable = true;
+  # wayland.windowManager.hyprland.enable = true;
 
   programs.git = {
     enable = true;
